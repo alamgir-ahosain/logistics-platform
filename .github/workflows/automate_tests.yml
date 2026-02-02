@@ -1,0 +1,50 @@
+name: Automate Test workflows
+
+permissions:
+  contents: read
+  checks: write
+
+on:
+  push:
+    branches: [ "main", "dev" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: 'maven'
+        cache-dependency-path: server/pom.xml
+
+    - name: Build and Test with Maven
+      run: mvn -B clean verify
+
+    - name: Upload test reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-reports
+        path: server/target/surefire-reports
+
+    - name: Publish test results
+      if: always()
+      uses: dorny/test-reporter@v1
+      with:
+        name: JUnit Tests
+        path: server/target/surefire-reports/*.xml
+        reporter: java-junit
+        fail-on-error: true
