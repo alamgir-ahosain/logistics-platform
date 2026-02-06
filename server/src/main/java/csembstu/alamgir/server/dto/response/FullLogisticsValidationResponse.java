@@ -3,8 +3,10 @@ package csembstu.alamgir.server.dto.response;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
+@Accessors(chain = true)
 public class FullLogisticsValidationResponse {
     private List<String> temperature_incompatible_demands;
     private List<CapacityViolation> capacity_violations;

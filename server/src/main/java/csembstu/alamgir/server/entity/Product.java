@@ -2,10 +2,12 @@ package csembstu.alamgir.server.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
 @Entity
 @Table(name = "products")
+@Accessors(chain = true)
 public class Product {
 
     @Id
