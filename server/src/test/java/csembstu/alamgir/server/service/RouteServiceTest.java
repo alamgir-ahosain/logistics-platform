@@ -58,6 +58,8 @@ public class RouteServiceTest {
 
         routeRequest = new CreateRouteRequest().setCapacity(250).setMinShipment(40);
         routeResponse = new RouteResponse().setCapacity(250).setMinShipment(40);
+
+        route = new Route().setCapacity(250).setMinShipment(40);
     }
 
 
@@ -180,7 +182,8 @@ public class RouteServiceTest {
         mockLocation2.setId(toId);
 
         routeResponse.setFromLocationId(fromId).setToLocationId(toId);
-        route.setFromLocation(mockLocation1).setToLocation(mockLocation1);
+
+        route.setFromLocation(mockLocation1).setToLocation(mockLocation2);
         when(routeRepository.findAll()).thenReturn(asList(route));
 
         //WHEN
