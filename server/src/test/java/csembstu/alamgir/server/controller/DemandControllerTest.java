@@ -23,7 +23,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import csembstu.alamgir.server.dto.LocationType;
 import csembstu.alamgir.server.dto.request.CreateDemandRequest;
 import csembstu.alamgir.server.dto.response.DemandResponse;
-import csembstu.alamgir.server.entity.Demand;
 import csembstu.alamgir.server.entity.Location;
 import csembstu.alamgir.server.entity.Product;
 import csembstu.alamgir.server.service.DemandService;
@@ -39,7 +38,7 @@ public class DemandControllerTest {
     private Location mockLocation;
     private Product mockProduct;
     private CreateDemandRequest mockDemandRequest;
-    private DemandResponse demandRespnse;
+    private DemandResponse demandResponse;
 
 
     @BeforeEach
@@ -47,6 +46,7 @@ public class DemandControllerTest {
         mockLocation = new Location() .setName("FreshMart Uttara").setType(LocationType.RETAILER) .setCity("Bogura");
         mockProduct = new Product().setName("Fresh Milk").setMaxTemperature(2.0).setMinTemperature(6.0);
         mockDemandRequest = new CreateDemandRequest().setDate("2026-02-07").setMinQuantity(60).setMaxQuantity(120);
+        demandResponse = new DemandResponse().setDate("2026-02-07").setMinQuantity(60).setMaxQuantity(120);
     }
 
 
@@ -60,9 +60,9 @@ public class DemandControllerTest {
         String productId = "P1";
 
         mockDemandRequest.setLocationId(locationId).setProductId(productId);
-        demandRespnse.setId("D1") .setLocationId(locationId) .setProductId(productId);
+        demandResponse.setId("D1") .setLocationId(locationId) .setProductId(productId);
 
-        Mockito.when(demandService.createDemand(Mockito.any(CreateDemandRequest.class))).thenReturn(demandRespnse);
+        Mockito.when(demandService.createDemand(Mockito.any(CreateDemandRequest.class))).thenReturn(demandResponse);
 
         // WHEN & THEN
         mockMvc.perform(post("/api/demands")
@@ -89,10 +89,10 @@ public class DemandControllerTest {
         String productId = "P1";
 
         mockDemandRequest.setLocationId(locationId).setProductId(productId);
-        demandRespnse.setId("D1").setLocationId(locationId).setProductId(productId);
+        demandResponse.setId("D1").setLocationId(locationId).setProductId(productId);
 
         // WHEN AND THEN
-        Mockito.when(demandService.getAllDemand()).thenReturn(asList(demandRespnse));
+        Mockito.when(demandService.getAllDemand()).thenReturn(asList(demandResponse));
         mockMvc.perform(get("/api/demands"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(1))
