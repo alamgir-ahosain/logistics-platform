@@ -82,7 +82,7 @@ class ValidationApiService2Test {
                 // GIVEN
                 product.setMinTemperature(2).setMaxTemperature(8);
                 demand.setProduct(product) .setLocation(destination) .setMinQuantity(50) .setMaxQuantity(200);
-                route.setFromLocation(warehouse) .setToLocation(destination).setCapacity(100); // max violated.setMinShipment(60); // min violated
+                route.setFromLocation(warehouse) .setToLocation(destination).setCapacity(100) .setMinShipment(60); // max,min violated
                 unit.setMinTemperature(0).setMaxTemperature(10).setCapacity(500);
 
                 when(demandRepository.findByDate(any())).thenReturn(List.of(demand));
