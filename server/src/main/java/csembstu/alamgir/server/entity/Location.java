@@ -3,10 +3,13 @@ package csembstu.alamgir.server.entity;
 import csembstu.alamgir.server.dto.LocationType;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
 @Entity
 @Table(name = "locations")
+@Accessors(chain = true)
+
 public class Location {
 
     @Id

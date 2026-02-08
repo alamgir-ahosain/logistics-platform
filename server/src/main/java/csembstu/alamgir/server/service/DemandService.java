@@ -50,8 +50,8 @@ public class DemandService {
                 .setMaxQuantity((int) request.getMaxQuantity())
                 .setMinQuantity((int) request.getMinQuantity());
 
-        demandRepository.save(newDemand);
-        return mapToResponseHelper(newDemand);
+        Demand savedDemand=demandRepository.save(newDemand);
+        return mapToResponseHelper(savedDemand);
 
     }
 
@@ -89,7 +89,7 @@ public class DemandService {
 
         response.setId(newDemand.getId())
                 .setLocationId(newDemand.getLocation().getId())
-                .setProductId(newDemand.getId())
+                .setProductId(newDemand.getProduct().getId())
                 .setDate(newDemand.getDate())
                 .setMinQuantity(newDemand.getMinQuantity())
                 .setMaxQuantity(newDemand.getMaxQuantity());
