@@ -1,25 +1,21 @@
 package csembstu.alamgir.server.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvEntry;
 
 public class EnvConfig {
     public static void loadEnv() {
-
         Dotenv dotenv = Dotenv.configure()
                 .ignoreIfMissing()
                 .load();
 
-        String dbhost = dotenv.get("DB_HOST");
-        String dbport = dotenv.get("DB_PORT");
-        String dbname = dotenv.get("DB_NAME");
-        String dbuser = dotenv.get("DB_USER");
-        String dbpassword = dotenv.get("DB_PASSWORD");
+        for (DotenvEntry entry : dotenv.entries()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
 
-        System.setProperty("DB_HOST", dbhost);
-        System.setProperty("DB_PORT", dbport);
-        System.setProperty("DB_NAME", dbname);
-        System.setProperty("DB_USER", dbuser);
-        System.setProperty("DB_PASSWORD", dbpassword);
-
+            if (value != null && !value.isEmpty()) {
+                System.setProperty(key, value);
+            }
+        }
     }
 }
