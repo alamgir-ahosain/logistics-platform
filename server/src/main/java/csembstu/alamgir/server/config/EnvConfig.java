@@ -5,7 +5,9 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class EnvConfig {
     public static void loadEnv() {
 
-        Dotenv dotenv = Dotenv.configure().load();
+        Dotenv dotenv = Dotenv.configure()
+                .ignoreIfMissing()
+                .load();
 
         String dbhost = dotenv.get("DB_HOST");
         String dbport = dotenv.get("DB_PORT");
